@@ -1,2 +1,0 @@
-cc = clang
-c_flags = -Wall -Wextra -g
