@@ -1,6 +1,6 @@
 cc = clang
 c_flags = -Wall -Wextra -g
-src = binary_1
+src = binary_2
 target = a
 
 all: $(target)
