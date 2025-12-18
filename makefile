@@ -1,6 +1,6 @@
 cc = clang
 c_flags = -Wall -Wextra -g
-src = hashmap
+src = bst
 target = a
 
 all: $(target)
