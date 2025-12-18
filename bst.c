@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ko_co NULL
+#define ko_co NULL //i dont have single finger to type "NULL" lol
 
 typedef struct Node {
   struct Node *left, *right;
@@ -46,6 +46,58 @@ void printPreOrder(Node *root) {
   printPreOrder(root->right);
 }
 
+void searchNode(Node *root, int data) {
+  if (root == ko_co) {
+     printf("ko tim thay\n"); return;
+  } else if (root->data == data) {
+     printf("tim thay\n"); return;
+  } else if (root->data < data) {
+    searchNode(root->right, data);
+  }
+  searchNode(root->left, data);
+}
+
+Node *findMin(Node *root) {
+  if (root == ko_co) {
+    return NULL;
+  } else if (root->left != ko_co) {
+    return findMin(root->left);
+  }
+  return root;
+}
+
+Node *deleteNode(Node *root, int data) {
+  if (root == NULL) {
+    printf("data doesnt exist in tree\n");    
+    return ko_co;
+  }
+
+  if (root->data < data) {
+    deleteNode(root->right, data);
+  } else if (root->data > data) {
+    deleteNode(root->left, data);
+  } else {
+    if (root->left == ko_co && root->right == ko_co) {
+      free(root);
+      return root;
+    } else if (root->left == ko_co || root->right == ko_co) {
+      Node *temp;
+      if (root->left == ko_co) {
+ 	temp = root->right;
+      } else {
+ 	temp = root->left;
+      }
+      free(root);
+      return temp;      
+    } else {
+      Node *temp = findMin(root->right);
+      root->data = temp->data;
+      root->right = deleteNode(root->right, temp->data);      
+    }
+  }
+  return root;  
+}  
+
 int main() {
 
   Node *root = NULL;
@@ -54,8 +106,14 @@ int main() {
   insertNode(root, 10);
   insertNode(root, -1);
 
-  printInorder(root);
-  printPreOrder(root);
+  printInorder(root);  printf("\n");
+  printPreOrder(root); printf("\n");
+  
+  searchNode(root, -1); printf("\n");
+  searchNode(root, 100);
+
+  Node *temp = deleteNode(root, 10);
+  printInorder(root);  
   
   return EXIT_SUCCESS;  
 }  
