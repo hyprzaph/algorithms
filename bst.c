@@ -67,36 +67,39 @@ Node *findMin(Node *root) {
 }
 
 Node *deleteNode(Node *root, int data) {
-  if (root == NULL) {
-    printf("data doesnt exist in tree\n");    
+  if (root == ko_co) {
     return ko_co;
   }
 
-  if (root->data < data) {
-    deleteNode(root->right, data);
-  } else if (root->data > data) {
-    deleteNode(root->left, data);
+  if (data < root->data) {
+    root->left = deleteNode(root->left, data);
+  } else if (data > root->data) {
+    root->right = deleteNode(root->right, data);
   } else {
+    // case 1: no child
     if (root->left == ko_co && root->right == ko_co) {
       free(root);
-      return root;
-    } else if (root->left == ko_co || root->right == ko_co) {
-      Node *temp;
-      if (root->left == ko_co) {
- 	temp = root->right;
-      } else {
- 	temp = root->left;
-      }
+      return ko_co;
+    }
+    // case 2: one child
+    else if (root->left == ko_co) {
+      Node *temp = root->right;
       free(root);
-      return temp;      
-    } else {
+      return temp;
+    } else if (root->right == ko_co) {
+      Node *temp = root->left;
+      free(root);
+      return temp;
+    }
+    // case 3: two children
+    else {
       Node *temp = findMin(root->right);
       root->data = temp->data;
-      root->right = deleteNode(root->right, temp->data);      
+      root->right = deleteNode(root->right, temp->data);
     }
   }
-  return root;  
-}  
+  return root;
+}
 
 int main() {
 
@@ -112,7 +115,7 @@ int main() {
   searchNode(root, -1); printf("\n");
   searchNode(root, 100);
 
-  Node *temp = deleteNode(root, 10);
+  root = deleteNode(root, 10);
   printInorder(root);  
   
   return EXIT_SUCCESS;  
