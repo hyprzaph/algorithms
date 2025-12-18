@@ -1,6 +1,6 @@
 cc = clang
 c_flags = -Wall -Wextra -g
-src = bst
+src = backtracking
 target = a
 
 all: $(target)
