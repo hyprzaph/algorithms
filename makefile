@@ -1,6 +1,6 @@
 cc = clang
 c_flags = -Wall -Wextra -g
-src = divide
+src = linkedlist
 target = a
 
 all: $(target)
